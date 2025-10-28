@@ -1,0 +1,34 @@
+ 100
+xn = nr.rand(N,2)
+
+x = np.linspace(0,1);
+
+# Pick a line 
+a = nr.rand();
+b = nr.rand();
+f = lambda x : a*x + b;
+
+fig =plt.figure()
+
+plt.plot(xn[:,0],xn[:,1],'bo');
+plt.plot(x,f(x),'r')
+
+# Linearly separate the points by the line
+yn = np.zeros([N,1]);
+
+for i in range(N):
+    if(f(xn[i,0])>xn[i,1]):
+        # Point is below line
+        yn[i] = 1;
+        plt.plot(xn[i,0],xn[i,1],'ro')
+    else:
+        # Point is above line
+        yn[i] = -1;
+        
+        
+plt.legend(['Above','Separator','Below'],loc=0)
+plt.title('Selected points with their separating line.')
+figa = plt.gca();
+figa.axes.get_xaxis().set_visible(False)
+figa.axes.get_yaxis().set_visible(False)
+plt.show()
