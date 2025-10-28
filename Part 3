@@ -1,0 +1,27 @@
+w= perceptron(xn,yn)
+
+# Using weights w to compute a,b for a line y=a*x+b
+
+bnew = -w[0]/w[2];
+anew = -w[1]/w[2];
+
+y = lambda x: anew * x + bnew;
+
+# Computing the colors for the points
+
+sep_color = (yn+1)/2.0; # colour map expects scalar between 0.0-1.0 for each point
+plt.figure();
+
+plt.scatter(xn[:,0],xn[:,1],c=sep_color, s=100)
+
+plt.plot(x,y(x),'b--',label='Line from perceptron implementation.')
+plt.plot(x,f(x),'r',label='Original line.')
+plt.legend()
+
+plt.title('Comparison between the linear separator and the perceptron approximation.')
+
+figa = plt.gca()
+figa.axes.get_xaxis().set_visible(False)
+figa.axes.get_yaxis().set_visible(False)
+
+plt.show()
