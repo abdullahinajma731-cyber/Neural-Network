@@ -1,0 +1,37 @@
+def perceptron(xn,yn,MaxIter=1000,w=np.zeros(3)):
+    '''        
+        Given points (x,y), the perceptron learning algorithm searches for the best
+        line (parametrised by three weights w0,w1,w2) 
+        
+        Input: 
+            xn : Data points, an Nx2 vector. 
+            yn : Classification of the previous data points, an Nx1 vector. 
+            MaxIter : Maximum number of iterations (optional).
+            w  : Initial vector of parameters (optional).
+            
+        Output: 
+            w : Parameters of the best line, y = ax+b, that linearly separates the data. 
+        
+        Note:
+            Convergence will be slower than expected, since this implementation picks points
+            to update without a specific plan (randomly). This is enough for a demonstration, not 
+            so good for actual work. 
+'''
+    
+    N = xn.shape[0];
+    
+    # Separating curve
+    f = lambda x: np.sign(w[0]+w[1]*x[0]+w[2]*x[1]);
+    
+    for _ in range(MaxIter):
+        i = nr.randint(N);
+        if(yn[i] != f(xn[i,:])): 
+             # If not classified correctly, adjust the line to account for that point. 
+             w[0] = w[0] + yn[i][0] # numpy 1.25 and onwards expects us to index [0] the final element in yn[i][0]       
+             w[1] = w[1] + yn[i][0]*xn[i,0];
+             w[2] = w[2] + yn[i][0]*xn[i,1];
+             # To see where these update rules come from consider the delta_w_i = c*(t-z)*x_i 
+             # formula from lecture notes, where yn = 2(t-z) given the if statement above, and
+             # we have implictly assumed c = 0.5 
+    
+    return w;
